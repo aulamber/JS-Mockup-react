@@ -1,2 +1,2 @@
 # Mockup React
-First app to discover ReactJS.
+First app to discover ReactJS and Redux.
