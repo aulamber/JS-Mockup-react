@@ -1,0 +1,143 @@
+*{
+	padding:0;
+	margin:0;
+	box-sizing:border-box;
+}
+a{
+  color:inherit;
+  text-decoration: none;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+body{
+	font-family: 'ProximaNovaRegular', sans-serif;
+    color: #333;
+}
+
+.clickable() {
+	cursor : pointer;
+}
+
+.transitions(@duration:.2s, @prop:all, @easing:ease-in-out){
+	transition:@arguments;
+}
+
+.interactions(@duration:.2s, @prop:all, @easing:ease-in-out){
+  .clickable();
+  .transitions(@duration:.2s, @prop:all, @easing:ease-in-out);
+}
+
+.applyBetween(@rules, @lowWidth, @highWidth) {
+  @media (min-width:@lowWidth) and (max-width : @highWidth) {
+    @rules();
+  }
+}
+
+.applyUnder(@rules, @width) {
+  @media (max-width : @width){
+    @rules();
+  }
+}
+
+.applyOver(@rules, @width) {
+  @media (min-width : @width){
+    @rules();
+  }
+}
+
+.gridSystem(@minColWidth, @maxColNumber, @margins) {
+	.loop(@counter) when (@counter > 0) {
+		.loop((@counter - 1));
+		.applyOver({width:(100% / @counter)}, (@counter * @minColWidth + @margins));
+	}
+
+	width: 100%;
+	display: inline-block;
+	vertical-align: top;
+	.loop(@maxColNumber);
+}
+
+.hideUnder(@width) {
+  .applyUnder({display:none}, @width);
+}
+
+.valign {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.valignWithin {
+  height: 100%;
+  &>* {
+    .valign();
+  }
+}
+
+.clearfix {
+  *zoom: 1;
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+    // Fixes Opera/contenteditable bug:
+    // http://nicolasgallagher.com/micro-clearfix-hack/#comment-36952
+    line-height: 0;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.getInLine(@spacing:0px) {
+  .valign();
+  float:left;
+  &:not(:last-child) {
+    margin-right: @spacing;
+  }
+}
+
+.ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.hCenter {
+  position: relative;
+  left:-50%;
+
+  &Outer {
+
+  }
+
+  &Inner {
+    float:left;
+    position:relative;
+    left:50%;
+    height: 100%;
+  }
+}
+
+.z(@height:1) {
+  box-shadow: 0 0 (1.5px * @height) (.5px * @height) rgba(0, 0, 0, 0.5);
+}
+
+.zh(@height:1) {
+  .transitions(.1s);
+  .z(@height);
+  &:hover {
+    .z(@height + 1);
+  }
+  &:active {
+    .z(@height - 1);
+  }
+}

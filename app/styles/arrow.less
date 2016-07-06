@@ -1,0 +1,20 @@
+.arrow(@dir; @borderColor:grey; @width:10px) {
+  border: solid @width transparent;
+  border-@{dir}: none;
+
+  & when (@dir = left) {
+    border-right-color: @borderColor;
+  }
+
+  & when (@dir = right) {
+    border-left-color: @borderColor;
+  }
+
+  & when (@dir = top) {
+    border-bottom-color: @borderColor;
+  }
+
+  & when (@dir = bottom) {
+    border-top-color: @borderColor;
+  }
+}
